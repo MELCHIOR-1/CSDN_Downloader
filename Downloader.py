@@ -13,9 +13,8 @@ import cookielib
 import urllib2
 import urllib
 from BeautifulSoup import BeautifulSoup
-from threading import Thread
+#from threading import Thread
 import os
-import time
 
 #http请求文件头
 class HeadRequest(urllib2.Request):
@@ -99,19 +98,20 @@ class DownloaderDlg(QDialog,DownloaderUI.Ui_DownloaderUI):
                 name = response.info().getheader('Content-Disposition').split('filename=')[1].strip('"').strip()
                 #filename = os.path.join(self.path,urllib.unquote(name))
                 filename = QFileDialog.getSaveFileName(self,"save",self.zh2unicode(urllib.unquote(name)))
-                self.output = "Start downloading file to " + filename + "\n"
-                self.E_status.setText(self.output)
-                #print self.output
-                self.downloadThread.setDetail(downloadUrl,filename)
-                
-                self.downloadThread.start()
-                #print self.output
-                #while (t2.isAlive()):
-                    #self.output = self.output + "Downloading...\n"
+                if filename:
+                    self.output = "Start downloading file to " + filename + "\n"
+                    self.E_status.setText(self.output)
+                    #print self.output
+                    self.downloadThread.setDetail(downloadUrl,filename)
+                    
+                    self.downloadThread.start()
+                    #print self.output
+                    #while (t2.isAlive()):
+                        #self.output = self.output + "Downloading...\n"
+                        #self.E_status.setText(self.output)
+                        #time.sleep(1)
+                    #self.output = self.output + "Finish...\n"
                     #self.E_status.setText(self.output)
-                    #time.sleep(1)
-                #self.output = self.output + "Finish...\n"
-                #self.E_status.setText(self.output)
             else:
                 self.output = self.output + self.zh2unicode(res.split('<br>')[1]) + "\n"
                 hrefs = BeautifulSoup(res)('a')
