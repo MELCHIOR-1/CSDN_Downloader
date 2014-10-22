@@ -23,13 +23,19 @@ class HeadRequest(urllib2.Request):
         return 'HEAD'
 
 #使用子线程来下载文件，防止UI线程阻塞        
-class GetSourceThread(Thread):
-    def __init__(self,url,filename):
-        Thread.__init__(self)
+class GetSourceThread(QThread):
+    def __init__(self,parent = None):
+        #Thread.__init__(self)
+        super(GetSourceThread, self).__init__(parent)
+        self.url = None
+        self.filename = None
+    def setDetail(self,url,filename):
         self.url = url
-        self.filename = filename        
-    def run(self):        
+        self.filename = filename
+    def run(self):
+        self.emit(SIGNAL("update"),'downing...')
         urllib.urlretrieve(self.url,self.filename)
+        self.emit(SIGNAL('update'),'finish!')
 
         
 class DownloaderDlg(QDialog,DownloaderUI.Ui_DownloaderUI):
@@ -43,9 +49,17 @@ class DownloaderDlg(QDialog,DownloaderUI.Ui_DownloaderUI):
         self.codeUrl = 'http://www.juming.com/Csdn/code.htm'
         self.path = os.getcwd()
         self.output = ""
+        self.downloadThread = GetSourceThread()
+        self.connect(self.downloadThread,SIGNAL("update"),self.update)
         #self.on_B_changePhoto_clicked()
         #self.updateUi()
+        
     
+    
+    def update(self,message):
+        self.output = self.output + message + '\n'
+        self.E_status.setText(self.output)
+        
     #获取验证码
     @pyqtSignature("")
     def on_B_changePhoto_clicked(self):
@@ -87,16 +101,25 @@ class DownloaderDlg(QDialog,DownloaderUI.Ui_DownloaderUI):
                 filename = QFileDialog.getSaveFileName(self,"save",self.zh2unicode(urllib.unquote(name)))
                 self.output = "Start downloading file to " + filename + "\n"
                 self.E_status.setText(self.output)
-                t2 = GetSourceThread(downloadUrl,filename)
-                t2.start()
+                #print self.output
+                self.downloadThread.setDetail(downloadUrl,filename)
+                
+                self.downloadThread.start()
+                #print self.output
                 #while (t2.isAlive()):
                     #self.output = self.output + "Downloading...\n"
                     #self.E_status.setText(self.output)
                     #time.sleep(1)
-                self.output = self.output + "Finish...\n"
+                #self.output = self.output + "Finish...\n"
                 #self.E_status.setText(self.output)
             else:
                 self.output = self.output + self.zh2unicode(res.split('<br>')[1]) + "\n"
+                hrefs = BeautifulSoup(res)('a')
+                if hrefs:
+                    for a in hrefs:
+                        href = a.get('href')
+                    self.output = self.output + "下载验证码错误，请到"+self.initUrl+href + "去输入验证码\n"
+                    
         #t2.join()
         except:
             self.output = '网络连接不正常，请检查网络！'
