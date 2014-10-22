@@ -26,8 +26,9 @@ CSDN Downloader
 ![](https://github.com/MELCHIOR-1/CSDN_Downloader/blob/master/pic/step4.png)  
   
 选择保存位置，点击OK  
-等待程序下载完毕，如下图：
-https://github.com/MELCHIOR-1/CSDN_Downloader/blob/master/pic/step5.png
+等待程序下载完毕，如下图：  
+
+![](https://github.com/MELCHIOR-1/CSDN_Downloader/blob/master/pic/step5.png)
 
 ***********
 #BUG
