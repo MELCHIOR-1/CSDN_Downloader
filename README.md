@@ -10,7 +10,8 @@ CSDN Downloader
 1. python2.7  
 2. BeautifulSoup库，已在仓库中  
 3. pyQT4的库函数  
-4. urllib、urllib2库
+4. urllib、urllib2库  
+
 *********
 #使用说明：
 直接双击Downloader.pyw，若能弹出程序界面，则说明不缺少库.初始界面如下：  
