@@ -42,8 +42,8 @@ def zh2unicode(text):
     return text
 
 path = os.getcwd()
-user = 'shawpan@yeah.net'
-pwd = 'xiaopan'
+user = '***********'
+pwd = '******'
 initUrl = "http://www.juming.com/Csdn/"
 loginUrl = 'http://www.juming.com/Csdn/index.htm'
 codeUrl = 'http://www.juming.com/Csdn/code.htm'
