@@ -41,8 +41,8 @@ class DownloaderDlg(QDialog,DownloaderUI.Ui_DownloaderUI):
     def __init__(self,parent = None):
         super(DownloaderDlg,self).__init__(parent)
         self.setupUi(self)
-        self.user = 'shawpan@yeah.net'
-        self.pwd = 'xiaopan'
+        self.user = '******'
+        self.pwd = '******'
         self.initUrl = "http://www.juming.com/Csdn/"
         self.loginUrl = 'http://www.juming.com/Csdn/index.htm'
         self.codeUrl = 'http://www.juming.com/Csdn/code.htm'
