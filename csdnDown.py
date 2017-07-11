@@ -53,8 +53,8 @@ opener.addheaders = [('User-agent','Mozilla/4.0 (compatible; MSIE 6.0; Windows N
 urllib2.install_opener(opener)
 resp = urllib2.urlopen(initUrl).read()
 
-user = 'shawpan@yeah.net'
-pwd = 'xiaopan'
+user = '***********'
+pwd = '******'
 #sourceUrl = 'http://download.csdn.net/download/geo_zhao/1630368'
 sourceUrl = 'http://download.csdn.net/download/geo_zhao/1630368'
 #sourceUrl = raw_input('Please enter the source Url: ')
